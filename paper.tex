@@ -1,0 +1,240 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 서울대학교 데이터마이닝연구실 구성원들의 박사학위논문 작성을 위해 아래 저작자의 자료를 일부 수정하였습니다.
+%% Author: zeta709 (zeta709@gmail.com) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2018-01-08 산업공학과 데이터마이닝 전공을 산업공학과로 수정하고, 영어 석사 논문 작성 시 편리한 작업을 위한 추가 수정 및 팁 작성 by 문지형 jhmoon@dm.snu.ac.kr
+
+\RequirePackage{fix-cm} 
+% oneside : 단면 인쇄용
+% twoside : 양면 인쇄용
+% ms: 석
+% phd : 박사
+% openright : 챕터가 홀수쪽에서 시작
+\documentclass[oneside,ms]{snuthesis_utf8}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 목차 양식을 변경하는 코드
+%% subfigure (subfig) package 사용 여부에 따라
+%% tocloft의 옵션을 다르게 지정해야 한다.
+%\usepackage[titles,subfigure]{tocloft} % when you use subfigure package
+\usepackage[titles]{tocloft} % when you don't use subfigure package
+\makeatletter % don't delete me
+\renewcommand\cftchappresnum{Chapter~}
+\renewcommand\cftfigpresnum{Figure~}
+\renewcommand\cfttabpresnum{Table~}
+
+
+\usepackage[pdftex,bookmarks=true]{hyperref}
+\usepackage{tabularx}
+\usepackage{array,multirow,graphicx,rotating,booktabs}
+\usepackage{caption}  %subfigure
+\usepackage{subcaption}  %subfigure
+\usepackage[round, sort, numbers]{natbib} %reference style
+\newcommand\mycite[1]{[\citenum{#1}]}
+\newcommand\myauthor[1]{\citeauthor{#1} (\citeyear{#1})}
+\usepackage{pbox} % line break in table
+\usepackage{adjustbox}
+\usepackage{footnote}
+\usepackage{color,soul}
+\usepackage{colortbl}
+\usepackage{amsmath}
+\usepackage{float} % position here
+\usepackage{lscape} % for landscape page
+\usepackage{kotex}
+\usepackage{listings}
+
+\makeatother % don't delete me
+\newlength{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cftchappresnum\cftchapaftersnum}
+\addtolength{\cftchapnumwidth}{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cfttabpresnum\cfttabaftersnum}
+\addtolength{\cfttabnumwidth}{\mytmplen}
+%% 목차 양식을 변경하는 코드 끝
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 다른 패키지 로드
+%% http://faq.ktug.or.kr/faq/pdflatex%B0%FAlatex%B5%BF%BD%C3%BB%E7%BF%EB
+%% 필요에 따라 직접 수정 필요
+\ifpdf
+	% \input glyphtounicode\pdfgentounicode=1 %type 1 font사용시
+	%\usepackage[pdftex,unicode]{hyperref} % delete me
+	%\usepackage[pdftex]{graphicx}
+	%\usepackage[pdftex,svgnames]{xcolor}
+\else
+	%\usepackage[dvipdfmx,unicode]{hyperref} % delete me%
+	%\usepackage[dvipdfmx]{graphicx}
+	%\usepackage[dvipdfmx,svgnames]{xcolor}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%% \title : 22pt로 나오는 큰 제목
+%% \title* : 16pt로 나오는 작은 제목
+\title{Practical Partial Row Activation\\ for 3D Stacked DRAM with Applications to Deep Learning Workloads}
+\title*{3D 적층 DRAM을 위한 실용적인 Partial Row Activation 및 딥 러닝 워크로드에의 적용}
+
+\titlen{Practical Partial Row Activation\\ for 3D Stacked DRAM with Applications to Deep Learning Workloads}
+
+\author{Namho~Kim}
+\author*{Namho~Kim} % Same as \author.
+\authorn{Namho~Kim}
+\phonenumber{010-5120-5105}
+\studentnumber{2017-22393}
+\advisor{Jae~W.~Lee}
+\advisor*{Jae W. Lee}
+\advisorn{Jae~W.~Lee}
+\graddate{February~2019}
+\submissiondate{January~2019}
+\submissiondaten{January~20th,~2019}
+\approvaldate{January~2019}
+
+\committeemembers%
+{Jihong Kim}%
+{Jae W. Lee}%
+{Jaejin Lee}%
+{교 수 님}%
+{교 수 님} %
+
+%% Length of underline
+\setlength{\committeenameunderlinelength}{5cm}
+
+\begin{document}
+\pagenumbering{Roman}
+\makefrontcover
+\makeapproval
+
+%agreement page
+\cleardoublepage
+%\makeagreement
+
+\cleardoublepage
+\pagenumbering{roman}
+
+\keyword{DRAM Architecture, GPU, Convolutional Neural Network, HBM2, Power Efficiency}
+\begin{abstract}
+GPUs are widely used to run deep learning applications. 
+Today's high-end GPUs adopt 3D stacked DRAM technologies like High-Bandwidth Memory (HBM) to provide massive bandwidth, which consumes lots of power. 
+Thousands of concurrent threads on GPU cause frequent row buffer conflicts to waste a significant amount of DRAM energy. 
+To reduce this waste we propose a \emph{practical} partial row activation scheme for 3D stacked DRAM. 
+Exploiting the latency tolerance of deep learning workloads with abundant memory-level parallelism, we trade DRAM latency for energy savings. 
+The proposed design demonstrates substantial savings of DRAM activation energy with minimal performance degradation for both the deep learning and other conventional GPU workloads. 
+This benefit comes with a very low area cost and only minimal adjustments of DRAM timing parameters to the standard HBM2 DRAM interface.
+\end{abstract}
+\cleardoublepage
+
+% % 여기 수정할 것
+\tableofcontents
+\addcontentsline{toc}{chapter}{\contentsname}
+\cleardoublepage
+
+\listoftables
+\addcontentsline{loc}{chapter}{\listtablename}
+\cleardoublepage
+
+\listoffigures
+\addcontentsline{loc}{chapter}{\listfigurename}
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\input{ch1.tex}
+
+\clearpage
+\chapter{Background and Motivation}
+\input{ch2.tex}
+
+\chapter{Practical Partial Row Activation}
+\input{ch3.tex}
+
+\chapter{Evaluation}
+\input{ch4.tex}
+
+\chapter{Conclusion}
+\input{ch5.tex}
+
+\clearpage
+%\section{Table insertion}
+%\subsection{Basic}
+%\url{https://www.tablesgenerator.com/latex_tables} creates the most basic template!
+%
+%\clearpage
+%\subsection{Advanced}
+%The most annoying part of latex work is table insertion.
+%Size modification, highlights, and annotation in table are very annoying compared to Hancom, so many people turn to it.
+%However, latex will feel much easier if you learn only the following introductions for graduation thesis.
+%
+%\textit{adjustbox}: It adjusts the overall size of the table. If not, a table may be generated  beyond the document scope.
+%
+%\textit{columncolor}: It shades the entire column to emphasize the results of my model.
+%
+%\textit{footnotemark and footnotetext}: Inside the table, the $\setminus$footnote does not work. 
+%For this reason, footnotemark and footnotetext are used.
+%Note that the page on which the annotation exists is not always the same (...) as the table.
+%When the footnotemark is used several times inside the table, the annotation number becomes strange.
+%In this case, use \textit{addtocounter}.
+%\newline
+%\newline
+%If you need more than this, let's do googling.
+
+\clearpage
+
+%\addtocounter{footnote}{-1}
+%\footnotetext{For a fair comparison, we report EntNet's result~\mycite{henaff2016tracking} which was jointly trained on all tasks. It was written in the appendix of the paper.}
+%\addtocounter{footnote}{+1}
+%\footnotetext{Our implementation. The result is different from what \myauthor{santoro2017simple} mentioned, which is caused by the initialization~\mycite{santoro2017simple}.}
+%
+
+%\chapter{Reference insertion}
+%\section{Insert reference right before the period mark}
+%Do not use conventional $\sim\setminus$cite\{\}.
+
+%ex: blah blah~\cite{bishop2006}.
+%Because of ( ), I defined `mycite' to appear reference number with [ ].
+
+%ex: blah blah~\mycite{bishop2006}.
+
+
+%\clearpage
+%\section{Insert reference to the author name}
+%Sometimes you need to put a reference to the author name. 
+%To do this, I defined `myauthor'.
+%ex: \myauthor{bishop2006} said blah blah~\mycite{bishop2006}.
+
+\begin{bibpage}
+	\bibliographystyle{ieeetr}
+	\bibliography{references}
+\end{bibpage}
+
+
+\appendix
+%\chapter{Appendix title 1}
+%The appendix does not appear in the table of contents.
+%In this case, open a .toc file (or click the table of contents page with holding ctrl) and add a line below the bibliography.
+%
+%\contentsline {chapter}{Bibliography}{8}{section*.9} % 현재 Bibliography
+%\contentsline {chapter}{Appendix}{9}{section*.10} % {9}는 페이지 번호이므로 알아서 맞추자
+%\contentsline {section}{\numberline {A}Appendix title 1}{9}{section.Alph0.1}
+%\contentsline {section}{\numberline {B}Appendix title 2}{10}{section.Alph0.2}
+%
+%\chapter{Appendix title 2}
+
+\keywordalt{CNN, GPU, DRAM 아키텍처, 에너지 효율, HBM2}
+\begin{abstractalt}
+GPU는 딥 러닝 애플리케이션을 실행하는 데 널리 사용된다.
+오늘날의 high-end GPU는 HBM (High-Bandwidth Memory)과 같은 3D 적층 DRAM 기술을 채택하여 
+엄청난 대역폭을 제공하므로 많은 전력을 소비한다.
+GPU에서 수천 개의 동시 스레드가 발생하면 빈번한 row buffer conflict로 인해 상당한 양의 DRAM 에너지가 낭비된다.
+이러한 낭비를 줄이기 위해 3D 적층 DRAM에 대한 partial row activation 기법을 제안한다.
+풍부한 memory-level parallelism 이 있는 딥 러닝 워크 로드의 latency tolerance를 활용해서, DRAM latency를 지불하고 에너지 절감을 얻을 수 있다.
+본 제안에서 딥 러닝 및 기타 기존 GPU 워크 로드에서 성능 저하를 최소화하면서 DRAM activation energy의 상당한 절감 효과를 보여준다.
+본 제안은 매우 낮은 면적 비용으로 표준 HBM2 DRAM 인터페이스에 대한 DRAM 타이밍의 최소한의 변경만으로 구현할 수 있다는 장점이 있다.
+\end{abstractalt}
+
+\acknowledgement
+\input{ack.tex}
+%Thanks!
+
+\end{document}
